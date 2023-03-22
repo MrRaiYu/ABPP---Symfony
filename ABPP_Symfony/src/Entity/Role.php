@@ -33,6 +33,7 @@ class Role
     {
         $this->logins = new ArrayCollection();
     }
+    
 
     public function getId(): ?int
     {
@@ -68,6 +69,7 @@ class Role
 
         return $this;
     }
+    
 
     public function removeLogin(Login $login): self
     {

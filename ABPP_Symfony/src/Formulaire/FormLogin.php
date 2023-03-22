@@ -8,6 +8,8 @@
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\PasswordType;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    use App\Entity\Role;
+    use App\Entity\Login;
 
     class LoginForm extends AbstractType {
         
@@ -15,7 +17,6 @@
             $builder->add('identifiant', TextType :: class)
                     -> add('mdp', PasswordType:: class)
                     -> add('connexion', SubmitType :: class);
-                             
         }
     }
 ?>

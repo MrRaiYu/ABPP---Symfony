@@ -2,6 +2,7 @@
     namespace App\Controller;
 
     use App\Entity\Login;
+    use App\Entity\Role;
     use LDAP\Result;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
@@ -15,36 +16,46 @@
     class LoginController extends AbstractController{
 
     /**
-    * @Route("FormLogin", name="FormLogin")
-    */
-        function CreateLoginform(Request $requestHTTP,ManagerRegistry $doctrine) {
+     * @Route("FormLogin", name="FormLogin")
+     */
+    function CreateLoginform(Request $requestHTTP, ManagerRegistry $doctrine) {
 
-            $login= new login();
- 
-            $formulaireLogin = $this->createForm(LoginForm :: class, $login);
+        $login = new Login();
     
-            $formulaireLogin->handleRequest($requestHTTP);
+        $formulaireLogin = $this->createForm(LoginForm::class, $login);
+    
+        $formulaireLogin->handleRequest($requestHTTP);
+    
+        if ($formulaireLogin->isSubmitted() && $formulaireLogin->isValid()) {
+    
+            $id = $formulaireLogin['identifiant']->getData();
+            $mdp = $formulaireLogin['mdp']->getData();
 
-
-            if ($formulaireLogin->isSubmitted() && $formulaireLogin->isValid()) 
+            $user = $doctrine->getRepository(Login::class)->findOneBy(['identifiant' => $id , 'mdp' => $mdp]);
+    
+            if ($user == null)
             {
-                
-                    $LoginInfos = $formulaireLogin->getData();
-    
-                    $entityManager = $doctrine->getManager();
-                    
-                    $entityManager->persist($LoginInfos);
-               
-                    $entityManager->flush();
-                    
-                   return $this->redirectToRoute('Admi');
+                return new Response('Utilisateur non existant');
             }
-            else
+            // Récupérer l'ID du rôle de l'utilisateur
+                $roleId = $user->getRole()->getId();
+
+            if ($roleId == null) {
+                return new Response('Role non existant');
+            }
+            if($roleId == 1)
             {
-                   return $this->render('loginform.html.twig' ,['loginform' => $formulaireLogin->createView()]);
-            }              
+                return $this->render('Administrateur.html.twig');
+            }
+            if($roleId == 2)
+            {
+                return $this->render('Enseignant.html.twig');
+            }
+        }
+        else
+        {
+            return $this->render('loginform.html.twig', ['loginform' => $formulaireLogin->createView()]);
         }
     }
-    
-
+}
 ?>
