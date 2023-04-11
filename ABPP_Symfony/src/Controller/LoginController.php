@@ -32,6 +32,8 @@
             $mdp = $formulaireLogin['mdp']->getData();
 
             $user = $doctrine->getRepository(Login::class)->findOneBy(['identifiant' => $id , 'mdp' => $mdp]);
+            $username = $user->getIdentifiant();
+            $userRole = $user->getRole()->getLibelle();
     
             if ($user == null)
             {
@@ -45,11 +47,17 @@
             }
             if($roleId == 1)
             {
-                return $this->render('Administrateur.html.twig');
+                return $this->render('Administrateur.html.twig',[
+                    'username' => $username,
+                    'userRole' => $userRole,
+                ]);  
             }
             if($roleId == 2)
             {
-                return $this->render('Enseignant.html.twig');
+                return $this->render('Enseignant.html.twig',[
+                    'username' => $username,
+                    'userRole' => $userRole,
+                ]);
             }
         }
         else
