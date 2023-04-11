@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/bofo.css">
+    </head>
+    <body>
+        {% set var = 'test' %}
+        {% include 'header.html.twig'%}
+        <h1>Administrateur</h1>
+        <div class="bouton">
+            <a href="{{ path('choixGestion') }}"><input class="gest" type='button' value="Gestions des données"/></a>
+            <a href="{{ path('listEleves') }}"><input class="list" type='button' value="Accès à la liste des élèves"/></a>
+        </div>
+    </body>
+</html>

@@ -7,8 +7,7 @@
     use Symfony\Component\HttpFoundation\Request;
     use Doctrine\Persistence\ManagerRegistry;
     use App\Formulaire\ConnexionType;
-use Symfony\Bridge\Doctrine\Test\TestRepositoryFactory;
-use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Response;
 
     class ConnexionController extends AbstractController
     {
@@ -25,20 +24,59 @@ use Symfony\Component\HttpFoundation\Response;
                 $login = $formulaireUtilisateur['util_login']->getData();
                 $mdp = $formulaireUtilisateur['util_mdp']->getData();
                 $realmdp = $doctrine->getRepository(Utilisateur::class)->findOneBy(['UtilLogin' => $login , 'UtilMDP' => $mdp]);
-                dump($realmdp);
                 if ($realmdp == null)
                 {
                     return new Response('Connexion échoué');
                 }
                 else
                 {
-                    return new Response('Connexion réussis');
+                    return $this->redirectToRoute("bofo");
                 }
             }
             else
             {
                 return $this->render('connexionform.html.twig', ['connexionform' => $formulaireUtilisateur->createView()]);
             }
+        }
+
+        /**
+         * @Route("bofo", name="bofo")
+         */
+        function bofo(Request $requeteHTTP, ManagerRegistry $doctrine)
+        {
+            return $this->render('bofo.html.twig');
+        }
+
+        /**
+         * @Route("choixGestion", name="choixGestion")
+         */
+        function choixGestion()
+        {
+            return $this->render('choixGestion.html.twig');
+        }
+
+        /**
+         * @Route("gestEntreprise", name="gestEntreprise")
+         */
+        function gestEntreprise()
+        {
+            return $this->render('gestEntreprise.html.twig');
+        }
+
+        /**
+         * @Route("gestUtil", name="gestUtil")
+         */
+        function gestUtil()
+        {
+            return $this->render('gestUtil.html.twig');
+        }
+
+        /**
+         * @Route("listEleves", name="listEleves")
+         */
+        function listEleves()
+        {
+            return new Response('Page listEleves');
         }
     }
 ?>
