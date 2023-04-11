@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
+    </head>
+    <body>
+        {% block body %}
+            <table class="{{ class|default('') }}">
+    <thead>
+        <tr>
+            <th scope="col" class="key">{{ labels is defined ? labels[0] : 'Key' }}</th>
+            <th scope="col">{{ labels is defined ? labels[1] : 'Value' }}</th>
+        </tr>
+    </thead>
+            <tr>
+                <th scope="row">{{ nom }}</th>
+                <th scope="row">{{ prenom }}</th>
+
+            </tr>
+            <tr>
+                <th scope="row">{{ adresse }}</th>
+                <th scope="row">{{ RS }}</th>
+                <th scope="row">{{ Pays }}</th>
+            </tr>
+            <tr>
+                <th scope="row">{{ tuteurnom }}</th>
+                <th scope="row">{{ tuteurprenom }}</th>
+                <th scope="row">{{ jury }}</th>
+
+            </tr>
+            <tr>
+                <th scope="row">{{ session }}</th>
+            </tr>
+            <tr>
+                <th scope="row">{{ stagiaire }}</th>
+            </tr>
+            <tr>
+                <th scope="row">{{ contact }}</th>
+                <th scope="row">{{ tél }}</th>
+
+            </tr>
+    </tbody>
+</table>
+        {% endblock %}
+    </body>
+</html>
