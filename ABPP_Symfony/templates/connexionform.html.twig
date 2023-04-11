@@ -1,2 +1,26 @@
-<h1>Connexion</h1>
-{{ form(connexionform) }}
+<!DOCTYPE html>
+<html>
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+<body>
+{% block body %}
+<div class="login-box">
+  <div class="cercle"><img src="images/chataigneraie.png" alt="jsp"></div>
+  {{ form_start(connexionform) }}
+  <div class="box-log">
+    <div class="user-box">
+      {{ form(connexionform.util_login) }}
+      <label>Nom Utilisateur</label>
+    </div>
+    <div class="user-box">
+      {{ form(connexionform.util_mdp) }}>
+      <label>Mot de passe</label>
+    </div>
+    <center>
+    <input type="submit"> </input>
+    </center>
+  </div>
+  {{ form_end(connexionform) }}
+</div>
+{% endblock %}
+</body>
+</html>
