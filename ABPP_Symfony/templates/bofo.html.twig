@@ -4,12 +4,11 @@
         <link rel="stylesheet" href="css/bofo.css">
     </head>
     <body>
-        {% set var = 'test' %}
-        {% include 'header.html.twig'%}
+        {% include 'header.html.twig' %}
         <h1>Administrateur</h1>
-        <div class="bouton">
+        <div class="button">
             <a href="{{ path('choixGestion') }}"><input class="gest" type='button' value="Gestions des données"/></a>
-            <a href="{{ path('listEleves') }}"><input class="list" type='button' value="Accès à la liste des élèves"/></a>
+            <a href="{{ path('listEntreprise') }}"><input class="list" type='button' value="Accès à la liste des entreprises"/></a>
         </div>
     </body>
 </html>
