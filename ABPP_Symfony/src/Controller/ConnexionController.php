@@ -1,82 +1,69 @@
 <?php
     namespace App\Controller;
 
-    use App\Entity\Utilisateur;
+    use LDAP\Result;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
     use Doctrine\Persistence\ManagerRegistry;
+    use App\Formulaire\LoginForm;
+    use App\Entity\Utilisateur;
     use App\Formulaire\ConnexionType;
+    use Symfony\Bridge\Doctrine\Test\TestRepositoryFactory;
     use Symfony\Component\HttpFoundation\Response;
+ 
+    
+    class ConnexionController extends AbstractController{
 
-    class ConnexionController extends AbstractController
-    {
         /**
          * @Route("connexion", name="connexion")
          */
-        function connexion(Request $requeteHTTP, ManagerRegistry $doctrine)
-        {
-            $utilisateur = new Utilisateur();
-            $formulaireUtilisateur = $this->createForm(ConnexionType :: class, $utilisateur);
-            $formulaireUtilisateur->handleRequest($requeteHTTP);
-            if ($formulaireUtilisateur->isSubmitted() && $formulaireUtilisateur->isValid())
+    function connexion(Request $requestHTTP, ManagerRegistry $doctrine) {
+
+        $utilisateur = new Utilisateur();
+    
+        $formulaireUtilisateur = $this->createForm(ConnexionType :: class, $utilisateur);
+    
+        $formulaireUtilisateur->handleRequest($requestHTTP);
+    
+        if ($formulaireUtilisateur->isSubmitted() && $formulaireUtilisateur->isValid()) {
+    
+            $login = $formulaireUtilisateur['util_login']->getData();
+            $mdp = $formulaireUtilisateur['util_mdp']->getData();
+
+            $realmdp = $doctrine->getRepository(Utilisateur::class)->findOneBy(['UtilLogin' => $login , 'UtilMDP' => $mdp]);
+            $username = $realmdp->getUtilLogin();
+            $userRole = $realmdp->getProfil()->getProLib();
+    
+            if ($realmdp == null)
             {
-                $login = $formulaireUtilisateur['util_login']->getData();
-                $mdp = $formulaireUtilisateur['util_mdp']->getData();
-                $realmdp = $doctrine->getRepository(Utilisateur::class)->findOneBy(['UtilLogin' => $login , 'UtilMDP' => $mdp]);
-                if ($realmdp == null)
-                {
-                    return new Response('Connexion échoué');
-                }
-                else
-                {
-                    return $this->redirectToRoute("bofo");
-                }
+                return new Response('Utilisateur non existant');
             }
-            else
+            // Récupérer l'ID du rôle de l'utilisateur
+                $roleId = $realmdp->getProfil()->getId();
+
+            if ($roleId == null) {
+                return new Response('Role non existant');
+            }
+            if($roleId == 1)
             {
-                return $this->render('connexionform.html.twig', ['connexionform' => $formulaireUtilisateur->createView()]);
+                return $this->render('Administrateur.html.twig',[
+                    'username' => $username,
+                    'userRole' => $userRole,
+                ]);  
+            }
+            if($roleId == 2)
+            {
+                return $this->render('Enseignant.html.twig',[
+                    'username' => $username,
+                    'userRole' => $userRole,
+                ]);
             }
         }
-
-        /**
-         * @Route("bofo", name="bofo")
-         */
-        function bofo(Request $requeteHTTP, ManagerRegistry $doctrine)
+        else
         {
-            return $this->render('bofo.html.twig');
-        }
-
-        /**
-         * @Route("choixGestion", name="choixGestion")
-         */
-        function choixGestion()
-        {
-            return $this->render('choixGestion.html.twig');
-        }
-
-        /**
-         * @Route("gestEntreprise", name="gestEntreprise")
-         */
-        function gestEntreprise()
-        {
-            return $this->render('gestEntreprise.html.twig');
-        }
-
-        /**
-         * @Route("gestUtil", name="gestUtil")
-         */
-        function gestUtil()
-        {
-            return $this->render('gestUtil.html.twig');
-        }
-
-        /**
-         * @Route("listEleves", name="listEleves")
-         */
-        function listEleves()
-        {
-            return new Response('Page listEleves');
+            return $this->render('connexionform.html.twig', ['connexionform' => $formulaireUtilisateur->createView()]);
         }
     }
+}
 ?>
