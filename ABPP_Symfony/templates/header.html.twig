@@ -4,7 +4,7 @@
     </head>
     <body>
         <div class="all">
-            <h1 class="titre">Nom - Prénom - Fonction</h1>
+            <h1 class="titre">{{ app.session.get('username') }} - {{ app.session.get('userRole') }}</h1>
             <a href="{{ path('connexion') }}"><input class="co" type='button' value="Déconnexion"/></a>
         </div>
     </body>
