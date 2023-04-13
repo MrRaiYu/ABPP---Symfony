@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="css/styleChoixGest.css">
+        <link rel="stylesheet" href="css/choixGestion.css">
     </head>
     <body>
+        {% include 'header.html.twig' %}
         <h1>Que souhaitez-vous gérer ?</h1>
-        <a href="{{ path('gestEntreprise') }}"><input type='button' value="Gérer les entreprises"/></a>
-        <a href="{{ path('gestUtil') }}"><input type='button' value="Gérer les élèves"/></a>
+        <div class="but">
+            <a href="{{ path('gestEntreprise') }}"><input class='entr' type='button' value="Gérer les entreprises"/></a>
+            <a href="{{ path('gestUtil') }}"><input class='util' type='button' value="Gérer les utilisateurs"/></a>
+        </div>
         <button onclick="history.back();">Retour</button>
-        <a href="{{ path('connexion') }}"><input type='button' value="Déconnexion"/></a>
     </body>
 </html>
