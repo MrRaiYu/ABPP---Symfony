@@ -1,4 +1,6 @@
-{% include 'header.html.twig' %}
+<h1>{{ Titre | upper }}</h1>
+
+ {% include 'header.html.twig' %}
 
 <link rel="stylesheet" href="{{ asset('css/Tableau.css') }}">
 
@@ -26,3 +28,6 @@
     {% endfor %}
   </tbody>
 </table>
+
+
+

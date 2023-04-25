@@ -67,6 +67,8 @@ class Specialite
 
         return $this;
     }
+    
+
 
     public function removeEntreprise(Entreprise $entreprise): self
     {

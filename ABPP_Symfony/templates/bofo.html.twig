@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/bofo.css">
+    </head>
+    <body>
+        {% include 'header.html.twig' %}
+        <div class="button">
+            <a href="{{ path('choixGestion') }}"><input class="gest" type='button' value="Gestions des données"/></a>
+            <a href="{{ path('listeEntreprises') }}"><input class="list" type='button' value="Accès à la liste des entreprises"/></a>
+        </div>
+    </body>
+</html>
