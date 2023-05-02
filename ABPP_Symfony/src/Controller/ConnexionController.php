@@ -28,7 +28,9 @@
                 
                 if ($realmdp == null)
                 {
-                    return new Response('Utilisateur non existant');
+                    $this->addFlash('error', 'Le couple Utilisateur/Mot de Passe est incorrect');
+                    //return new Response('Utilisateur non existant');
+                    return $this->render('connexionform.html.twig', ['connexionform' => $formulaireUtilisateur->createView()]);
                 }
 
                 $username = $realmdp->getUtilLogin();
