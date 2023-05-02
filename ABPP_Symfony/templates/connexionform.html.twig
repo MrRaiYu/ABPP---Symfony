@@ -1,2 +1,26 @@
-<h1>Connexion</h1>
-{{ form(connexionform) }}
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Page de connexion</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img src="images/chataigneraie.png" alt="Logo">
+      </div>
+      <div class="form-container">
+        {{ form_start(connexionform) }}
+        {{ form_row(connexionform.util_login, {'label': false, 'attr': {'class': 'text-box', 'placeholder': 'Utilisateur', 'onfocus': "if(this.value=='Utilisateur')this.value='';", 'onblur': "if(this.value=='')this.value='';"}}) }}
+        {{ form_row(connexionform.util_mdp, {'label': false, 'attr': {'class': 'text-box', 'placeholder': 'Mot de passe', 'type': 'password', 'onfocus': "if(this.value=='Mot de passe')this.value='';", 'onblur': "if(this.value=='')this.value='';"}}) }}
+        {{ form_row(connexionform.connexion, { 'attr': {'class': 'btn-submit'} })}}
+        {{ form_end(connexionform) }}
+        {% for label, messages in app.flashes(['error']) %}
+          {% for message in messages %}
+              <span>{{ message }}</span>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
