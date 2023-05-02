@@ -54,6 +54,7 @@
                     return $this->redirectToRoute('Administrateur');  
                 }
                 if($roleId == 2)
+                if($roleId == 2)
                 {
                     // Stocker le username et le role dans une session
                     $session->set('username', $username);
