@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
         {
             $builder->add('util_login', TextType :: class)
                     ->add('util_mdp', PasswordType :: class)
-                    ->add('Connexion', SubmitType :: class);
+                    ->add('connexion', SubmitType :: class);
         }
     }
 ?>
