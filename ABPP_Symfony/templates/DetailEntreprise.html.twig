@@ -1,0 +1,7 @@
+<h1>Détail de l'annonce numéro {{entreprise.id}}</h1>
+<table>
+
+<p>Spécialites :</p> 
+{% for entreprise in entreprise.specialites %}
+    <ul><li>{{ entreprise.SpeLib()}}</li></ul>
+{% endfor %}

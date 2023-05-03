@@ -37,6 +37,7 @@ class Entreprise
 
     /**
      * @ORM\ManyToMany(targetEntity=Specialite::class, mappedBy="entreprise")
+     * @ORM\JoinTable(name="entreprise_specialite")
      */
     private $specialites;
 
@@ -44,6 +45,11 @@ class Entreprise
      * @ORM\OneToMany(targetEntity=Personnel::class, mappedBy="Entreprise")
      */
     private $personnels;
+
+    /**
+     * @ORM\Column(type="string", length=150, nullable=true)
+     */
+    private $Adresse;
 
     public function __construct()
     {
@@ -91,6 +97,7 @@ class Entreprise
 
         return $this;
     }
+    
 
     /**
      * @return Collection<int, Specialite>
@@ -119,6 +126,7 @@ class Entreprise
         return $this;
     }
 
+
     /**
      * @return Collection<int, Personnel>
      */
@@ -145,6 +153,18 @@ class Entreprise
                 $personnel->setEntreprise(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->Adresse;
+    }
+
+    public function setAdresse(?string $Adresse): self
+    {
+        $this->Adresse = $Adresse;
 
         return $this;
     }

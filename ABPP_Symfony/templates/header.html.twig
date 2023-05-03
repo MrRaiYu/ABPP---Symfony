@@ -4,6 +4,9 @@
     </head>
     <body>
         <div class="all">
+            <div class="logo">
+                <img src="images/chataigneraie.png" alt="Logo Chataigneraie">
+            </div>
             <h1 class="titre">{{ app.session.get('username') }} - {{ app.session.get('userRole') }}</h1>
             <a href="{{ path('connexion') }}"><input class="co" type='button' value="Déconnexion"/></a>
         </div>
