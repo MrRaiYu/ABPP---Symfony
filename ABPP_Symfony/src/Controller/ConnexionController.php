@@ -53,7 +53,7 @@
                     $session->set('username', $username);
                     $session->set('userRole', $userRole);
 
-                    return $this->redirectToRoute('Administrateur');  
+                    return $this->redirectToRoute('listeEntreprises');  
                 }
                 if($roleId == 2)
                 if($roleId == 2)
