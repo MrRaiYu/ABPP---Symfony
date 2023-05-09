@@ -29,7 +29,7 @@
             if ($formulaireUtilisateur->isSubmitted() && $formulaireUtilisateur->isValid()) {
         
                 $login = $formulaireUtilisateur['util_login']->getData();
-                $mdp = $formulaireUtilisateur['util_mdp']->getData();
+                $mdp = md5($formulaireUtilisateur['util_mdp']->getData()); //md5() qui hash le mot de passe en md5
 
                 $realmdp = $doctrine->getRepository(Utilisateur::class)->findOneBy(['UtilLogin' => $login , 'UtilMDP' => $mdp]);
                 $username = $realmdp->getUtilLogin();
