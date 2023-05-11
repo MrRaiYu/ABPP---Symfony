@@ -1,34 +1,48 @@
 <h1>{{ Titre | upper }}</h1>
 
- {% include 'header.html.twig' %}
+{% include 'header.html.twig' %}
 
 <link rel="stylesheet" href='css/Tableau.css'>
 
 <table border="3">
-  <thead>
-    <tr>
-      <th>Entreprise</th>
-      <th>Adresse</th>
-      <th>Ville</th>
-      {% if  app.session.get('userRole')=="Administrateur" %}
-      <th>Supprimer</th>
-      <th>Modifier</th>
-      {% endif %}
-      
-    </tr>
-  </thead>
-  <tbody>
-    {% for listeentreprises in listeentreprises %}
-      <tr>
-        
-        <td><a href="{{ path('DetailEntreprise', {'id': listeentreprises.id }) }}">{{listeentreprises.EntRS}}</a></td>
-        <td>{{ listeentreprises.Adresse }}</td>
-        <td>{{ listeentreprises.EntVille }}</td>
-        {% if  app.session.get('userRole')=="Administrateur" %}
-        <td><a href="{{ path('SupprimerEntreprise', {'id': listeentreprises.id }) }}"><img src='images/supprimer.png' width="30" height="30" alt="Supprimer"></a></td>
-        <td><a href="{{ path('ModifierEntreprise', {'id': listeentreprises.id }) }}"><img src='images/modifier.png' width="30" height="30" alt="Modifier"></a></td>
-        {% endif %}
-      </tr>
-    {% endfor %}
-  </tbody>
+	<thead>
+		<tr>
+			<th>Entreprise</th>
+			<th>Adresse</th>
+			<th>Ville</th>
+			<th>Profils</th>
+			{% if  app.session.get('userRole')=="Administrateur" %}
+				<th>Supprimer</th>
+				<th>Modifier</th>
+			{% endif %}
+
+		</tr>
+	</thead>
+	<tbody>
+		{% for listeentreprises in listeentreprises %}
+			<tr>
+
+				<td>
+					<a href="{{ path('DetailEntreprise', {'id': listeentreprises.id }) }}">{{listeentreprises.EntRS}}</a>
+				</td>
+				<td>{{ listeentreprises.Adresse }}</td>
+				<td>{{ listeentreprises.EntVille }}</td>
+				<td>
+					{% for specialite in specialiteentreprises[listeentreprises.getId()] %}
+						{{ specialite }}<br>
+					{% endfor %}
+				</td>
+
+				{% if  app.session.get('userRole')=="Administrateur" %}
+					<td>
+						<a href="{{ path('SupprimerEntreprise', {'id': listeentreprises.id }) }}"><img src='images/supprimer.png' width="30" height="30" alt="Supprimer"></a>
+					</td>
+					<td>
+						<a href="{{ path('ModifierEntreprise', {'id': listeentreprises.id }) }}"><img src='images/modifier.png' width="30" height="30" alt="Modifier"></a>
+					</td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+	</tbody>
 </table>
+
