@@ -18,3 +18,8 @@ th {
 tbody tr:nth-of-type(even) {
   background-color: #f8f9fa;
 }
+.text-center {
+  text-align: center;
+}
+
+

@@ -4,14 +4,21 @@
 
 <link rel="stylesheet" href="{{ asset('css/Tableau.css') }}">
 
+<form action="{{ path('listeEntreprises') }}" method="get">
+  <input type="text" name="search" placeholder="Rechercher...">
+  <button type="submit">Rechercher</button>
+</form>
+
 <table border="3">
   <thead>
     <tr>
       <th>Entreprise</th>
       <th>Adresse</th>
       <th>Ville</th>
-      <th>Supprimer</th>
-      <th>Modifier</th>
+      {% if app.session.get('userRole') == 'Administrateur' %}
+        <th>Supprimer</th>
+        <th>Modifier</th>
+      {% endif %}
       
     </tr>
   </thead>
@@ -22,12 +29,22 @@
         <td><a href="{{ path('DetailEntreprise', {'id': listeentreprises.id }) }}">{{listeentreprises.EntRS}}</a></td>
         <td>{{ listeentreprises.Adresse }}</td>
         <td>{{ listeentreprises.EntVille }}</td>
-        <td><a href="{{ path('SupprimerEntreprise', {'id': listeentreprises.id }) }}"><img src="{{ asset('images/supprimer.png') }}" width="30" height="30" alt="Supprimer"></a></td>
-        <td><a href="{{ path('ModifierEntreprise', {'id': listeentreprises.id }) }}"><img src="{{ asset('images/modifier.png') }}" width="30" height="30" alt="Modifier"></a></td>
+        {% if app.session.get('userRole') == 'Administrateur' %}
+          <td style="text-align: center;"><a href="{{ path('SupprimerEntreprise', {'id': listeentreprises.id }) }}"><img src="{{ asset('images/supprimer.png') }}" width="30" height="30" alt="Supprimer"></a></td>
+          <td style="text-align: center;"><a href="{{ path('ModifierEntreprise', {'id': listeentreprises.id }) }}"><img src="{{ asset('images/modifier.png') }}" width="30" height="30" alt="Modifier"></a></td>
+        {% endif %}
       </tr>
     {% endfor %}
   </tbody>
 </table>
+{% if app.session.get('userRole') == 'Administrateur' %}
+      <td><a href="{{ path('AjouterEntreprise') }}" style="text-decoration:none;"><button type="button" name="ajoutentreprise">Ajouter une entreprise</button></a></td>
+{% endif %}
+{% if app.session.get('userRole') == 'Administrateur' %}
+      <td><a href="{{ path('AjouterUtil') }}" style="text-decoration:none;"><button type="button" name="ajouteutilisateur">Ajouter un utilisateur</button></a></td>
+{% endif %}
+
+<td><a href="{{ path('listeUtil') }}" style="text-decoration:none;"><button type="button" name="ajouteutilisateur">Liste Utilisateurs</button></a></td>
 
 
 

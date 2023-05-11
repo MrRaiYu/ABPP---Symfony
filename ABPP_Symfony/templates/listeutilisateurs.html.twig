@@ -1,0 +1,9 @@
+{% for listeutilisateurs in listeutilisateurs %}
+<p>{{ listeutilisateurs.UtilLogin }}</p>
+<p>{{ listeutilisateurs.UtilMDP }}</p>
+{% endfor %}
+
+
+{% if app.session.get('userRole') == 'Administrateur' %}
+      <td><a href="{{ path('AjouterUtil') }}" style="text-decoration:none;"><button type="button" name="ajouteutilisateur">Ajouter un utilisateur</button></a></td>
+{% endif %}

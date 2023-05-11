@@ -11,6 +11,38 @@
 
     class EntrepriseController extends AbstractController {
 
+
+         /**
+        *@Route("AjouterEntreprise", name="AjouterEntreprise")
+        */
+        function AjouterEntreprise(Request $requestHTTP,ManagerRegistry $doctrine) {
+
+            $entreprise = new entreprise();
+
+            $formulaireEntreprise = $this->createForm(EntrepriseForm :: class, $entreprise);
+    
+            $formulaireEntreprise->handleRequest($requestHTTP);
+
+
+            if ($formulaireEntreprise->isSubmitted() && $formulaireEntreprise->isValid()) 
+            {
+
+                    $EntrepriseInfos = $formulaireEntreprise->getData();
+    
+                    $entityManager = $doctrine->getManager();
+                    
+                    $entityManager->persist($EntrepriseInfos);
+               
+                    $entityManager->flush();
+                    
+                   return $this->redirectToRoute('listeEntreprises');
+            }
+
+                    else
+                    {
+                    return $this->render('entrepriseform.html.twig' ,['entrepriseform' => $formulaireEntreprise->createView()]);
+                    }               
+        }
         /**
         *@Route("listeEntreprises", name="listeEntreprises")
         */
@@ -80,5 +112,7 @@
                     return $this->render('entrepriseform.html.twig' ,['entrepriseform' => $formulaireEntreprise->createView()]);
                     }               
         }
+        
+
     }     
 ?>
