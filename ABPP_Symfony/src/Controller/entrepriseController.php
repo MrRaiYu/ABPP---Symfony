@@ -5,9 +5,9 @@
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use App\Entity\Entreprise;
-    use Symfony\Component\HttpFoundation\Request;
- 
-
+use App\Formulaire\RechercheEntreprise;
+use Doctrine\DBAL\Query;
+use Symfony\Component\HttpFoundation\Request;
 
     class EntrepriseController extends AbstractController {
 
@@ -19,9 +19,27 @@
             
             $entityManager = $doctrine->getManager();
             $listeentreprises = $entityManager->getRepository(Entreprise::class)->findAll();
-            $titre = 'Liste des entreprises';
 
-            return $this->render('listeentreprises.html.twig' ,['Titre' => $titre, 'listeentreprises'=> $listeentreprises]);
+            $formulaireSearch = $this->createForm(RechercheEntreprise :: class);
+            $formulaireSearch->handleRequest($requestHTTP);
+            if ($formulaireSearch->isSubmitted() && $formulaireSearch->isValid())
+            {
+                $nom = $formulaireSearch['Nom']->getData();
+                $adresse = $formulaireSearch['Adresse']->getData();
+                $ville = $formulaireSearch['Ville']->getData();
+                
+                //$listeentreprises = $doctrine->getRepository(Entreprise::class)->findBy(['EntRS' => '%' . $nom . '%']) OR $listeentreprises = $doctrine->getRepository(Entreprise::class)->findBy(['Adresse' => '%' . $adresse . '%']) OR $listeentreprises = $doctrine->getRepository(Entreprise::class)->findBy(['EntVille' => '%' . $ville . '%']);
+                $listeentreprises = $entityManager->getRepository(Entreprise::class)->RechercheEntreprise($nom,$ville,$adresse);
+                if ($listeentreprises==null)
+                {
+                    $this->addFlash('error', 'Aucune entreprise ne correspond à ces critères');
+                }
+                return $this->render('listeentreprises.html.twig' ,['listeentreprises'=> $listeentreprises, 'formulaireSearch' => $formulaireSearch->createView()]);
+            }
+            else
+            {
+                return $this->render('listeentreprises.html.twig' ,['listeentreprises'=> $listeentreprises, 'formulaireSearch' => $formulaireSearch->createView()]);
+            }
         }  
         
         /**
@@ -64,21 +82,20 @@
             if ($formulaireEntreprise->isSubmitted() && $formulaireEntreprise->isValid()) 
             {
 
-                    $EntrepriseInfos = $formulaireEntreprise->getData();
+                $EntrepriseInfos = $formulaireEntreprise->getData();
     
-                    $entityManager = $doctrine->getManager();
+                 $entityManager = $doctrine->getManager();
                     
-                    $entityManager->persist($EntrepriseInfos);
+                $entityManager->persist($EntrepriseInfos);
                
-                    $entityManager->flush();
+                $entityManager->flush();
                     
-                   return $this->redirectToRoute('listeEntreprises');
+                return $this->redirectToRoute('listeEntreprises');
             }
-
-                    else
-                    {
-                    return $this->render('entrepriseform.html.twig' ,['entrepriseform' => $formulaireEntreprise->createView()]);
-                    }               
+            else
+            {
+                return $this->render('entrepriseform.html.twig' ,['entrepriseform' => $formulaireEntreprise->createView()]);
+            }
         }
     }     
 ?>

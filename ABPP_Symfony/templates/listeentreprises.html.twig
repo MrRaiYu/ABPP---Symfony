@@ -1,8 +1,10 @@
-<h1>{{ Titre | upper }}</h1>
-
- {% include 'header.html.twig' %}
+{% include 'header.html.twig' %}
 
 <link rel="stylesheet" href='css/Tableau.css'>
+
+<h1>{{ "Liste des entreprises" | upper}}</h1>
+
+{{ form(formulaireSearch) }}
 
 <table border="3">
   <thead>
@@ -32,3 +34,8 @@
     {% endfor %}
   </tbody>
 </table>
+{% for label, messages in app.flashes(['error']) %}
+  {% for message in messages %}
+    <span>{{ message }}</span>
+  {% endfor %}
+{% endfor %}
