@@ -3,7 +3,17 @@
 <h1>Détail de l'entreprise {{entreprise.EntRS}}</h1>
 <table>
 
-<p>Spécialites :</p> 
+<p><b>Adresse : </b>{{ entreprise.Adresse }}</p>
+
+<p><b>Ville : </b>{{ entreprise.EntVille }}</p>
+
+<p><b>Pays : </b>{{ entreprise.PaysID.PaysLib }}</p>
+
+<p><b>Spécialités : </b></p> 
 {% for entreprise in entreprise.specialites %}
     <ul><li>{{ entreprise.SpeLib()}}</li></ul>
 {% endfor %}
+
+<p><b>Personnels : </b></p>
+
+<p><b>Étudiants : </b></p>
