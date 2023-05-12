@@ -32,15 +32,15 @@
                 $mdp = md5($formulaireUtilisateur['util_mdp']->getData()); //md5() qui hash le mot de passe en md5
 
                 $realmdp = $doctrine->getRepository(Utilisateur::class)->findOneBy(['UtilLogin' => $login , 'UtilMDP' => $mdp]);
-                $username = $realmdp->getUtilLogin();
-                $userRole = $realmdp->getProfil()->getProLib();
-        
+
                 if ($realmdp == null)
                 {
                     $this->addFlash('error', 'Le couple Utilisateur/Mot de Passe est incorrect');
                     //return new Response('Utilisateur non existant');
                     return $this->render('connexionform.html.twig', ['connexionform' => $formulaireUtilisateur->createView()]);
                 }
+                $username = $realmdp->getUtilLogin();
+                $userRole = $realmdp->getProfil()->getProLib();
                 // Récupérer l'ID du rôle de l'utilisateur
                     $roleId = $realmdp->getProfil()->getId();
 
