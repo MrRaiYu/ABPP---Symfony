@@ -36,8 +36,7 @@ class Entreprise
     private $PaysID;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Specialite::class, mappedBy="entreprise")
-     * @ORM\JoinTable(name="entreprise_specialite")
+     * @ORM\ManyToMany(targetEntity=Specialite::class, inversedBy="entreprise")
      */
     private $specialites;
 

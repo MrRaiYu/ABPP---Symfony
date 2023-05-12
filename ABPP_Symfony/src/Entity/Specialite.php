@@ -25,7 +25,8 @@ class Specialite
     private $SpeLib;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Entreprise::class, inversedBy="specialites")
+     * @ORM\ManyToMany(targetEntity=Entreprise::class, mappedBy="specialites")
+     * @ORM\JoinTable(name="entreprise_specialite")
      */
     private $entreprise;
 
