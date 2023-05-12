@@ -1,0 +1,12 @@
+{% for listeutilisateurs in listeutilisateurs %}
+<a><b>Utilisateur : </b>{{ listeutilisateurs.UtilLogin }} - <b>Role : </b>{{ listeutilisateurs.Profil.ProLib }}</a>
+<a href="{{ path('ModifierUtil', {'id': listeutilisateurs.id }) }}">Modifier</a>
+<a href="{{ path('SupprimerUtil', {'id': listeutilisateurs.id }) }}">Supprimer</a>
+<br><br>
+{% endfor %}
+
+<br><br>
+
+{% if app.session.get('userRole') == 'Administrateur' %}
+      <td><a href="{{ path('AjouterUtil') }}" style="text-decoration:none;"><button type="button" name="ajouteutilisateur">Ajouter un utilisateur</button></a></td>
+{% endif %}
