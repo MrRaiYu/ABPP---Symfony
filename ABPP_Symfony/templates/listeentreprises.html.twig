@@ -1,8 +1,10 @@
-<h1>{{ Titre | upper }}</h1>
-
 {% include 'header.html.twig' %}
 
 <link rel="stylesheet" href='css/Tableau.css'>
+
+<h1>{{ "Liste des entreprises" | upper}}</h1>
+
+{{ form(formulaireSearch) }}
 
 <table border="3">
 	<thead>
@@ -10,7 +12,7 @@
 			<th>Entreprise</th>
 			<th>Adresse</th>
 			<th>Ville</th>
-			<th>Profils</th>
+			{# <th>Profils</th> #}
 			{% if  app.session.get('userRole')=="Administrateur" %}
 				<th>Supprimer</th>
 				<th>Modifier</th>
@@ -27,11 +29,11 @@
 				</td>
 				<td>{{ listeentreprises.Adresse }}</td>
 				<td>{{ listeentreprises.EntVille }}</td>
-				<td>
+				{# <td>
 					{% for specialite in specialiteentreprises[listeentreprises.getId()] %}
 						{{ specialite }}<br>
 					{% endfor %}
-				</td>
+				</td> #}
 
 				{% if  app.session.get('userRole')=="Administrateur" %}
 					<td>
@@ -45,4 +47,8 @@
 		{% endfor %}
 	</tbody>
 </table>
-
+{% for label, messages in app.flashes(['error']) %}
+  {% for message in messages %}
+    <span>{{ message }}</span>
+  {% endfor %}
+{% endfor %}

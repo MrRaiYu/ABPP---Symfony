@@ -39,6 +39,16 @@ class EntrepriseRepository extends ServiceEntityRepository
         }
     }
 
+    public function RechercheEntreprise($nom='', $ville='', $adresse=''): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT id, Ent_RS as EntRS, Ent_Ville as EntVille, Adresse FROM Entreprise WHERE Ent_RS LIKE :nom AND Ent_Ville LIKE :ville AND Adresse LIKE :adresse";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['nom' => '%'.$nom.'%', 'ville' => '%'.$ville.'%', 'adresse' => '%'.$adresse.'%']);
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return Entreprise[] Returns an array of Entreprise objects
 //     */

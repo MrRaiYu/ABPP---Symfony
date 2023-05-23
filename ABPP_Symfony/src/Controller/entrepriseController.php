@@ -7,6 +7,8 @@
     use App\Entity\Entreprise;
     use Symfony\Component\HttpFoundation\Request;
     use App\Entity\Specialite;
+    use App\Formulaire\RechercheEntreprise;
+    use Doctrine\DBAL\Query;
  
 
 
@@ -22,17 +24,37 @@
             $listeentreprises = $entityManager->getRepository(Entreprise::class)->findAll();
             $titre = 'Liste des entreprises';
              // Initialiser un tableau pour stocker les spécialités de chaque entreprise
-            $specialitesEntreprises = [];
+            // $specialitesEntreprises = [];
 
-        // Pour chaque entreprise, récupérer ses spécialités
-        foreach ($listeentreprises as $entreprise) {
-            $specialites = $entreprise->getSpecialites();
-            foreach ($specialites as $specialite) {
-                $specialiteentreprises[$entreprise->getId()][] = $specialite->getSpeLib();
+            // Pour chaque entreprise, récupérer ses spécialités
+            // foreach ($listeentreprises as $entreprise)
+            // {
+            //     $specialites = $entreprise->getSpecialites();
+            //     foreach ($specialites as $specialite)
+            //     {
+            //         $specialiteentreprises[$entreprise->getId()][] = $specialite->getSpeLib();
+            //     }
+            // }
+            $formulaireSearch = $this->createForm(RechercheEntreprise :: class);
+            $formulaireSearch->handleRequest($requestHTTP);
+            if ($formulaireSearch->isSubmitted() && $formulaireSearch->isValid())
+            {
+                $nom = $formulaireSearch['Nom']->getData();
+                $adresse = $formulaireSearch['Adresse']->getData();
+                $ville = $formulaireSearch['Ville']->getData();
+
+                //$listeentreprises = $doctrine->getRepository(Entreprise::class)->findBy(['EntRS' => '%' . $nom . '%']) OR $listeentreprises = $doctrine->getRepository(Entreprise::class)->findBy(['Adresse' => '%' . $adresse . '%']) OR $listeentreprises = $doctrine->getRepository(Entreprise::class)->findBy(['EntVille' => '%' . $ville . '%']);
+                $listeentreprises = $entityManager->getRepository(Entreprise::class)->RechercheEntreprise($nom,$ville,$adresse);
+                if ($listeentreprises==null)
+                {
+                   $this->addFlash('error', 'Aucune entreprise ne correspond à ces critères');
+                }
+                return $this->render('listeentreprises.html.twig' ,['listeentreprises'=> $listeentreprises, 'formulaireSearch' => $formulaireSearch->createView()]);
             }
-        }
-            
-            return $this->render('listeentreprises.html.twig' ,['Titre' => $titre, 'listeentreprises'=> $listeentreprises, 'specialiteentreprises'=> $specialiteentreprises]);
+            else
+            {
+                return $this->render('listeentreprises.html.twig' ,['listeentreprises'=> $listeentreprises, 'formulaireSearch' => $formulaireSearch->createView()]);
+            }
         }
         
         /**
@@ -47,6 +69,58 @@
             return $this->render('DetailEntreprise.html.twig', ['entreprise' => $listeentreprises]);
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         /**
         *@Route("SupprimerEntreprise/{id}", name="SupprimerEntreprise")
         */
