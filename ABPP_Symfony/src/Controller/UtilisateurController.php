@@ -12,7 +12,7 @@
 
 
          /**
-        *@Route("AjouterUtil", name="AjouterUtil")
+        *@Route("AjouterUtilisateur", name="AjouterUtilisateur")
         */
         function AjouterUtilisateur(Request $requestHTTP,ManagerRegistry $doctrine) {
 
@@ -34,7 +34,7 @@
                
                     $entityManager->flush();
                     
-                   return $this->redirectToRoute('listeUtil');
+                   return $this->redirectToRoute('listeUtilisateur');
             }
 
                     else
@@ -44,44 +44,43 @@
         }
 
         /**
-        *@Route("listeUtil", name="listeUtil")
+        *@Route("listeUtilisateur", name="listeUtilisateur")
         */
 
-        function listeUtilisateurs(Request $requestHTTP,ManagerRegistry $doctrine) {
+        function listeUtilisateur(Request $requestHTTP,ManagerRegistry $doctrine) {
             
             $entityManager = $doctrine->getManager();
-            $listeutilisateurs = $entityManager->getRepository(Utilisateur::class)->findAll();
-            $titre = 'Liste des utilisateurs';
+            $listeutilisateur = $entityManager->getRepository(Utilisateur::class)->findAll();
 
-            return $this->render('listeutilisateurs.html.twig' ,['Titre' => $titre, 'listeutilisateurs'=> $listeutilisateurs]);
+            return $this->render('listeutilisateur.html.twig' ,['listeutilisateur'=> $listeutilisateur]);
         }  
         
         /**
-        *@Route("DetailUtil/{id}", name="DetailUtili")
+        *@Route("DetailUtilisateur/{id}", name="DetailUtilisateur")
         */
 
         function DetailUtilisateur($id, ManagerRegistry $doctrine) {
 
              
             $entityManager = $doctrine->getManager();
-            $listeutilisateurs = $doctrine->getRepository(Utilisateur::class)->find($id);
-            return $this->render('DetailUtilisateur.html.twig', ['utilisateur' => $listeutilisateurs]);          
+            $listeutilisateur = $doctrine->getRepository(Utilisateur::class)->find($id);
+            return $this->render('DetailUtilisateur.html.twig', ['utilisateur' => $listeutilisateur]);          
         }
 
         /**
-        *@Route("SupprimerUtil/{id}", name="SupprimerUtil")
+        *@Route("SupprimerUtilisateur/{id}", name="SupprimerUtilisateur")
         */
         
         function SupprimerUtilisateur($id, ManagerRegistry $doctrine) {
             $entityManager = $doctrine->getManager();
-            $listeutilisateurs = $doctrine->getRepository(Utilisateur::class)->find($id);
-            $entityManager->remove($listeutilisateurs);
-            $entityManager->flush($listeutilisateurs);
-            return $this->redirectToRoute("listeUtilisateurs");       
+            $listeutilisateur = $doctrine->getRepository(Utilisateur::class)->find($id);
+            $entityManager->remove($listeutilisateur);
+            $entityManager->flush($listeutilisateur);
+            return $this->redirectToRoute("listeUtilisateur");       
         }
 
        /**
-        *@Route("ModifierUtil/{id}", name="ModifierUtil")
+        *@Route("ModifierUtilisateur/{id}", name="ModifierUtilisateur")
         */
 
         function MofifierUtilisateur(Request $requestHTTP,ManagerRegistry $doctrine) {
@@ -104,7 +103,7 @@
                
                     $entityManager->flush();
                     
-                   return $this->redirectToRoute('listeUtil');
+                   return $this->redirectToRoute('listeUtilisateur');
             }
 
                     else

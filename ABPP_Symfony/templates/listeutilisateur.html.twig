@@ -1,0 +1,29 @@
+{% include 'header.html.twig' %}
+
+<link rel="stylesheet" href="{{ asset('css/TableauUtilisateur.css') }}">
+
+<table border="2">
+  <thead>
+    <tr>
+      <th>Login</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+   <tbody>
+      <tr>
+      {% for listeutilisateur in listeutilisateur %}
+      <td>{{ listeutilisateur.UtilLogin }}</td>
+
+      {% if listeutilisateur.Profil is not null %}
+      <td>{{listeutilisateur.Profil}}</td>
+      {% endif %}   
+      </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+
+
+
+{% if app.session.get('userRole') == 'Administrateur' %}
+      <td><a href="{{ path('AjouterUtilisateur') }}" style="text-decoration:none;"><button type="button" name="ajouteutilisateur">Ajouter un utilisateur</button></a></td>
+{% endif %}

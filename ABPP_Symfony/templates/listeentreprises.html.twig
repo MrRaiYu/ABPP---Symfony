@@ -1,13 +1,8 @@
-<h1>{{ Titre | upper }}</h1>
-
- {% include 'header.html.twig' %}
+{% include 'header.html.twig' %}
 
 <link rel="stylesheet" href="{{ asset('css/Tableau.css') }}">
 
-<form action="{{ path('listeEntreprises') }}" method="get">
-  <input type="text" name="search" placeholder="Rechercher...">
-  <button type="submit">Rechercher</button>
-</form>
+{{ form(formulaireSearch) }}
 
 <table border="3">
   <thead>
@@ -37,14 +32,21 @@
     {% endfor %}
   </tbody>
 </table>
+
+
 {% if app.session.get('userRole') == 'Administrateur' %}
       <td><a href="{{ path('AjouterEntreprise') }}" style="text-decoration:none;"><button type="button" name="ajoutentreprise">Ajouter une entreprise</button></a></td>
 {% endif %}
+
 {% if app.session.get('userRole') == 'Administrateur' %}
-      <td><a href="{{ path('AjouterUtil') }}" style="text-decoration:none;"><button type="button" name="ajouteutilisateur">Ajouter un utilisateur</button></a></td>
+      <td><a href="{{ path('listeUtilisateur') }}" style="text-decoration:none;"><button type="button" name="Listeutilisateur">Liste Utilisateurs</button></a></td>
 {% endif %}
+/
 
-<td><a href="{{ path('listeUtil') }}" style="text-decoration:none;"><button type="button" name="ajouteutilisateur">Liste Utilisateurs</button></a></td>
-
+{% for label, messages in app.flashes(['error']) %}
+  {% for message in messages %}
+    <span>{{ message }}</span>
+  {% endfor %}
+{% endfor %}
 
 

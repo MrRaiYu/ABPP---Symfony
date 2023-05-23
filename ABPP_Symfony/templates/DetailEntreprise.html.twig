@@ -1,7 +1,10 @@
-<h1>Détail de l'annonce numéro {{entreprise.id}}</h1>
+<h1>Détail de l'entreprise numéro {{entreprise.id}}</h1>
 <table>
 
 <p>Spécialites :</p> 
 {% for entreprise in entreprise.specialites %}
     <ul><li>{{ entreprise.SpeLib()}}</li></ul>
 {% endfor %}
+
+
+<a href="{{ path('listePersonnel') }}" style="text-decoration:none;"><button type="button" name="Listepersonnels">Liste personnels</button></a>

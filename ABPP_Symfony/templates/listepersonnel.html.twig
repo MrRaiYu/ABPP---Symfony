@@ -1,0 +1,23 @@
+{% include 'header.html.twig' %}
+
+<link rel="stylesheet" href="{{ asset('css/Tableau.css') }}">
+
+
+<table border="2">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Tel</th>
+      <th>Mail</th>
+      <th>Fonction</th>
+      <th>Entreprise</th> 
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+      {% for listepersonnel in listepersonnel %}
+      <td>{{ listepersonnel.PersNom }}</td>   
+      </tr>
+    {% endfor %}
+  </tbody>
+  </table>
