@@ -97,5 +97,37 @@ use Symfony\Component\HttpFoundation\Request;
                 return $this->render('entrepriseform.html.twig' ,['entrepriseform' => $formulaireEntreprise->createView()]);
             }
         }
+
+        /**
+        *@Route("AjouterEntreprise", name="AjouterEntreprise")
+        */
+
+        function AjouterEntreprise(Request $requestHTTP,ManagerRegistry $doctrine) {
+
+            $listeentreprises = new Entreprise();
+
+            $formulaireEntreprise = $this->createForm(EntrepriseForm :: class, $listeentreprises);
+    
+            $formulaireEntreprise->handleRequest($requestHTTP);
+
+
+            if ($formulaireEntreprise->isSubmitted() && $formulaireEntreprise->isValid()) 
+            {
+
+                $EntrepriseInfos = $formulaireEntreprise->getData();
+    
+                 $entityManager = $doctrine->getManager();
+                    
+                $entityManager->persist($EntrepriseInfos);
+               
+                $entityManager->flush();
+                    
+                return $this->redirectToRoute('listeEntreprises');
+            }
+            else
+            {
+                return $this->render('entrepriseform.html.twig' ,['entrepriseform' => $formulaireEntreprise->createView()]);
+            }
+        }
     }     
 ?>
