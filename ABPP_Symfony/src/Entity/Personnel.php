@@ -43,6 +43,8 @@ class Personnel
      */
     private $Fonction;
 
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,4 +109,8 @@ class Personnel
 
         return $this;
     }
+    public function __toString() {
+        return $this->Fonction;
+    }
+
 }

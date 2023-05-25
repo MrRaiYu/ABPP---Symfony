@@ -1,10 +1,68 @@
-<h1>Détail de l'entreprise numéro {{entreprise.id}}</h1>
-<table>
+<link rel="stylesheet" href="{{ asset('css/Tableau.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style2.css') }}">
 
-<p>Spécialites :</p> 
-{% for entreprise in entreprise.specialites %}
-    <ul><li>{{ entreprise.SpeLib()}}</li></ul>
-{% endfor %}
+<h1>Détail de l'entreprise {{entreprise.EntRS}}</h1>
+
+<table>
+<h2>Informations générale sur l'entreprise</h2>
+<table border="2">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Ville</th>
+      <th>Adresse</th>
+      <th>Spécialites</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>{{ entreprise.EntRS()}}</td>
+
+    <td>{{ entreprise.EntVille()}}</td>
+
+    <td>{{ entreprise.Adresse()}}</td>
+
+    <td>
+          {% for specialite in entreprise.specialites %}
+            <b>{{ specialite.SpeLib }}</b><br>
+          {% endfor %}
+    </td>
+  </tbody>
+  </table>
+<br>
+<br>
+<br>
+ <h2>Informations sur le personnel de l'entreprise</h2>
+
+<table border="2">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Tel</th>
+      <th>Mail</th>
+      <th>Fonction</th>
+      <th>Jury</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+     {% for personnel in entreprise.personnels %}
+        <tr>
+          <td>{{ personnel.PersNom }}</td>
+          <td>0{{ personnel.PersTel }}</td>
+          <td>{{ personnel.PersMail }}</td>
+          <td>{{ personnel.Fonction.FonctionLib }}</td>
+          <td><!-- Insérer les informations du jury ici --></td>
+        </tr>
+      {% endfor %}
+
+
+  </tbody>
+  </table>
+  
+
+<p>Etudiants :</p> 
+
 
 
 <a href="{{ path('listePersonnel') }}" style="text-decoration:none;"><button type="button" name="Listepersonnels">Liste personnels</button></a>

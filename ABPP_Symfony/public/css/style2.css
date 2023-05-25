@@ -1,0 +1,32 @@
+/* CSS pour les titres */
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* CSS pour le bouton */
+  button[name="Listepersonnels"] {
+    display: inline-block;
+    padding: 8px 18px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[name="Listepersonnels"]:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+  }
+  
+  

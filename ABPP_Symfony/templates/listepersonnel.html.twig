@@ -2,7 +2,6 @@
 
 <link rel="stylesheet" href="{{ asset('css/Tableau.css') }}">
 
-
 <table border="2">
   <thead>
     <tr>
@@ -16,7 +15,11 @@
   <tbody>
   <tr>
       {% for listepersonnel in listepersonnel %}
-      <td>{{ listepersonnel.PersNom }}</td>   
+      <td>{{ listepersonnel.PersNom }}</td>
+      <td>0{{ listepersonnel.PersTel }}</td>   
+      <td>{{ listepersonnel.PersMail }}</td> 
+      <td>{{ listepersonnel.Fonction.FonctionLib }}</td>
+      <td>{{ listepersonnel.Entreprise.EntRS }}</td>
       </tr>
     {% endfor %}
   </tbody>
